@@ -8,12 +8,6 @@ pub struct UpdateOption<S, D>(Inner<S, D>);
 
 type Inner<S, D> = Option<Update<S, D>>;
 
-impl<S, D> From<(S, D)> for UpdateOption<S, D> {
-    fn from(pair: (S, D)) -> Self {
-        Update::from(pair).into()
-    }
-}
-
 impl<S, D> UpdateOption<S, D> {
     pub fn none() -> Self {
         Self(None)
@@ -21,5 +15,11 @@ impl<S, D> UpdateOption<S, D> {
 
     pub fn new(state: S, data: D) -> Self {
         Self::from(Update::new(state, data))
+    }
+}
+
+impl<S, D> From<(S, D)> for UpdateOption<S, D> {
+    fn from(pair: (S, D)) -> Self {
+        Update::from(pair).into()
     }
 }
