@@ -2,17 +2,17 @@ mod froms;
 
 use derive_more::{From, Into};
 
-use crate::updates::Update;
-use crate::updates::term::TermInner;
+use crate::nextstate::NextState;
+use crate::nextstate::term::TermInner;
 
 #[derive(Copy, Clone, Debug, PartialEq, Eq, From, Into)]
-pub struct UpdateResult<S, D, E>(Inner<S, D, E>);
+pub struct NextStateResult<S, D, E>(Inner<S, D, E>);
 
 type Inner<S, D, E> = TermInner<S, D, Result<(), E>>;
 
-impl<S, D, E> UpdateResult<S, D, E> {
+impl<S, D, E> NextStateResult<S, D, E> {
     pub fn new(state: S, data: D) -> Self {
-        Self::from(Update::new(state, data))
+        Self::from(NextState::new(state, data))
     }
 
     pub fn terminal_ok() -> Self {

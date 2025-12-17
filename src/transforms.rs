@@ -1,4 +1,4 @@
-use crate::updates::{Update, UpdateOption, UpdateResult, UpdateTerminal};
+use crate::nextstate::{NextState, NextStateOption, NextStateResult, NextStateTerminal};
 
 pub trait Transform: Sized {
     type Into;
@@ -6,54 +6,54 @@ pub trait Transform: Sized {
     fn transform(self) -> Self::Into;
 }
 
-pub trait TransformUpdateOption<D>: Transform
+pub trait UpdateOption<D>: Transform
 where
-    Self::Into: Into<UpdateOption<Self, D>>,
+    Self::Into: Into<NextStateOption<Self, D>>,
 {
 }
 
-impl<B, D> TransformUpdateOption<D> for B
+impl<B, D> UpdateOption<D> for B
 where
     B: Transform,
-    B::Into: Into<UpdateOption<Self, D>>,
+    B::Into: Into<NextStateOption<Self, D>>,
 {
 }
 
-pub trait TransformUpdateResult<D, E>: Transform
+pub trait UpdateResult<D, E>: Transform
 where
-    Self::Into: Into<UpdateResult<Self, D, E>>,
+    Self::Into: Into<NextStateResult<Self, D, E>>,
 {
 }
 
-impl<B, D, E> TransformUpdateResult<D, E> for B
-where
-    B: Transform,
-    B::Into: Into<UpdateResult<Self, D, E>>,
-{
-}
-
-pub trait TransformUpdateTerminal<D, T>: Transform
-where
-    Self::Into: Into<UpdateTerminal<Self, D, T>>,
-{
-}
-
-impl<B, D, T> TransformUpdateTerminal<D, T> for B
+impl<B, D, E> UpdateResult<D, E> for B
 where
     B: Transform,
-    B::Into: Into<UpdateTerminal<Self, D, T>>,
+    B::Into: Into<NextStateResult<Self, D, E>>,
 {
 }
 
-pub trait TransformUpdate<D>: Transform
+pub trait UpdateTerminal<D, T>: Transform
 where
-    Self::Into: Into<Update<Self, D>>,
+    Self::Into: Into<NextStateTerminal<Self, D, T>>,
 {
 }
 
-impl<B, D> TransformUpdate<D> for B
+impl<B, D, T> UpdateTerminal<D, T> for B
 where
     B: Transform,
-    B::Into: Into<Update<Self, D>>,
+    B::Into: Into<NextStateTerminal<Self, D, T>>,
+{
+}
+
+pub trait Update<D>: Transform
+where
+    Self::Into: Into<NextState<Self, D>>,
+{
+}
+
+impl<B, D> Update<D> for B
+where
+    B: Transform,
+    B::Into: Into<NextState<Self, D>>,
 {
 }
