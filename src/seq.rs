@@ -1,13 +1,8 @@
+//! Blanket extension traits for [Transition](crate::Transition)s which produce sequences of data
 mod endless;
 mod finite;
-mod sd;
-mod sdopt;
-mod sdterm;
 mod term;
 
-pub use self::endless::SeqEndless;
-pub use self::finite::SeqFinite;
-pub use self::sd::StateData;
-pub use self::sdopt::StateDataOpt;
-pub use self::sdterm::StateDataTerm;
-pub use self::term::SeqTerminal;
+pub use self::endless::EndlessSequence;
+pub use self::finite::Sequence;
+pub use self::term::TerminalSequence;

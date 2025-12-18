@@ -1,13 +1,15 @@
-use crate::Transition;
+use crate::NextTerm::{self, Next, Terminal};
 use crate::maps::MapData as _;
-use crate::seq::StateData;
-use crate::seq::StateDataTerm::{self, Next, Terminal};
+use crate::{StateData, Transition};
 
-pub trait SeqTerminal<D, T>: Transition<Next: Into<StateDataTerm<Self, D, T>>> {
-    fn into_next_sdterm(self) -> StateDataTerm<Self, D, T> {
+/// Any [Transition] into [NextTerm]`<Self, D, T>` is a [TerminalSequence] of `D` outputs terminating with a `T` value
+pub trait TerminalSequence<D, T>: Transition<Next: Into<NextTerm<Self, D, T>>> {
+    /// Convert from [Transition::into_next] directly into a [NextTerm]
+    fn into_next_term(self) -> NextTerm<Self, D, T> {
         self.into_next().into()
     }
 
+    /// Call `f` on each output, then return the terminal
     fn for_each_into_term<F>(self, mut f: F) -> T
     where
         F: FnMut(D) -> Option<T>,
@@ -15,7 +17,7 @@ pub trait SeqTerminal<D, T>: Transition<Next: Into<StateDataTerm<Self, D, T>>> {
         let mut st = self;
 
         loop {
-            match st.into_next_sdterm().map_data(&mut f) {
+            match st.into_next_term().map_data(&mut f) {
                 Next(StateData { state, data: None }) => st = state,
 
                 Terminal(term)
@@ -27,4 +29,4 @@ pub trait SeqTerminal<D, T>: Transition<Next: Into<StateDataTerm<Self, D, T>>> {
     }
 }
 
-impl<B, D, T> SeqTerminal<D, T> for B where B: Transition<Next: Into<StateDataTerm<B, D, T>>> {}
+impl<B, D, T> TerminalSequence<D, T> for B where B: Transition<Next: Into<NextTerm<B, D, T>>> {}
