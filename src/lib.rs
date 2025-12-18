@@ -1,4 +1,4 @@
-//! A state transition trait framework
+//! A trait family around the elementary [Transition] trait
 #![deny(unsafe_code)]
 
 mod maps;

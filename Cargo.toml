@@ -1,7 +1,10 @@
 [package]
-name = "superstate"
+name = "tfam"
+description = "A trait family around a elementary `Transition` trait for a variety of FP-style state machines, sequences."
+repository = "https://github.com/nejucomo/tfam"
 version = "0.1.0"
 edition = "2024"
+license = "MIT"
 
 [dependencies]
 derive_more = { version = "2.1.0", features = ["constructor", "from", "into"] }
