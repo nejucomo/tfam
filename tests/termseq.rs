@@ -1,8 +1,7 @@
 //! `TerminatingSequence` integration tests
 
-use superstate::Transition;
-use superstate::seq::endless::Sdata;
-use superstate::seq::term::SeqTerm;
+use superstate::seq::SeqTerminal;
+use superstate::{StateData, Transition};
 use test_case::test_case;
 
 // Test treating an `EndlessSequence` as a `TerminatingSequence`:
@@ -10,18 +9,18 @@ use test_case::test_case;
 struct Naturals(usize);
 
 impl Transition for Naturals {
-    type Next = Sdata<Self, usize>;
+    type Next = StateData<Self, usize>;
 
     fn into_next(self) -> Self::Next {
         let next = Naturals(self.0 + 1);
-        Sdata::new(next, next.0)
+        StateData::new(next, next.0)
     }
 }
 
 #[test_case(Naturals(0) => 15)]
 fn sum_first_five<S>(termseq: S) -> usize
 where
-    S: SeqTerm<usize, ()>,
+    S: SeqTerminal<usize, ()>,
 {
     let mut stepsleft = 5;
     let mut sum = 0;

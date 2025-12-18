@@ -1,9 +1,5 @@
-mod next;
+use crate::{StateData, Transition};
 
-use crate::Transition;
+pub trait SeqEndless<D>: Transition<Next: Into<StateData<Self, D>>> {}
 
-pub use self::next::{Sdata, SdataMap};
-
-pub trait SeqEndless<D>: Transition<Next: Into<Sdata<Self, D>>> {}
-
-impl<B, D> SeqEndless<D> for B where B: Transition<Next: Into<Sdata<Self, D>>> {}
+impl<B, D> SeqEndless<D> for B where B: Transition<Next: Into<StateData<Self, D>>> {}
