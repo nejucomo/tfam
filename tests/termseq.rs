@@ -1,6 +1,7 @@
 //! `TerminatingSequence` integration tests
 
-use superstate::transition::{TerminatingSequence, Transition};
+use superstate::Transition;
+use superstate::seq::TerminatingSequence;
 use test_case::test_case;
 
 use superstate::next::Sdata;
