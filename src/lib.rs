@@ -1,5 +1,5 @@
-//! A trait family around the elementary [Transition] trait
-#![deny(unsafe_code)]
+#![doc = include_str!("../README.md")]
+#![deny(unsafe_code, missing_docs)]
 
 mod nterm;
 mod sdata;

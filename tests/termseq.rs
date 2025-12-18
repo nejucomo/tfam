@@ -1,7 +1,7 @@
 //! `TerminatingSequence` integration tests
 
 use test_case::test_case;
-use tfam::seq::SeqTerminal;
+use tfam::seq::TerminalSequence;
 use tfam::{StateData, Transition};
 
 // Test treating an `EndlessSequence` as a `TerminatingSequence`:
@@ -20,7 +20,7 @@ impl Transition for Naturals {
 #[test_case(Naturals(0) => 15)]
 fn sum_first_five<S>(termseq: S) -> usize
 where
-    S: SeqTerminal<usize, ()>,
+    S: TerminalSequence<usize, ()>,
 {
     let mut stepsleft = 5;
     let mut sum = 0;

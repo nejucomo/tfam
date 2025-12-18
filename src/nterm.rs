@@ -3,13 +3,17 @@ use crate::maps::{MapData, MapState};
 
 use self::NextTerm::{Next, Terminal};
 
+/// A [Transition::Next](crate::Transition::Next) which can either produce a continuation state, `S`, and an output data, `D`, or else a terminal value `T`
 #[derive(Copy, Clone, Debug)]
 pub enum NextTerm<S, D, T> {
+    /// A continuation state `S` with data `D`
     Next(StateData<S, D>),
+    /// A terminal `T`
     Terminal(T),
 }
 
 impl<S, D, T> NextTerm<S, D, T> {
+    /// Map the [Self::Next] case
     pub fn map_next<F, SM, DM>(self, f: F) -> NextTerm<SM, DM, T>
     where
         F: FnOnce(StateData<S, D>) -> StateData<SM, DM>,
