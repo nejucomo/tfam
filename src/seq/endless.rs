@@ -1,5 +1,5 @@
+use crate::StateData;
 use crate::Transition;
-use crate::seq::StateData;
 
 pub trait SeqEndless<D>: Transition<Next: Into<StateData<Self, D>>> {}
 

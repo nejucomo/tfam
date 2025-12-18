@@ -1,10 +1,9 @@
-use crate::Transition;
+use crate::NextTerm::{self, Next, Terminal};
 use crate::maps::MapData as _;
-use crate::seq::StateData;
-use crate::seq::StateDataTerm::{self, Next, Terminal};
+use crate::{StateData, Transition};
 
-pub trait SeqTerminal<D, T>: Transition<Next: Into<StateDataTerm<Self, D, T>>> {
-    fn into_next_sdterm(self) -> StateDataTerm<Self, D, T> {
+pub trait SeqTerminal<D, T>: Transition<Next: Into<NextTerm<Self, D, T>>> {
+    fn into_next_sdterm(self) -> NextTerm<Self, D, T> {
         self.into_next().into()
     }
 
@@ -27,4 +26,4 @@ pub trait SeqTerminal<D, T>: Transition<Next: Into<StateDataTerm<Self, D, T>>> {
     }
 }
 
-impl<B, D, T> SeqTerminal<D, T> for B where B: Transition<Next: Into<StateDataTerm<B, D, T>>> {}
+impl<B, D, T> SeqTerminal<D, T> for B where B: Transition<Next: Into<NextTerm<B, D, T>>> {}
