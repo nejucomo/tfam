@@ -1,3 +1,2 @@
-mod terminating;
-
-pub use self::terminating::TerminatingSequence;
+pub mod endless;
+pub mod term;

@@ -1,4 +1,4 @@
-use crate::next::{Sdata, SdataMap};
+use crate::seq::endless::{Sdata, SdataMap};
 
 use self::SdTerm::{Next, Terminal};
 

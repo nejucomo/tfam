@@ -1,8 +1,13 @@
-use crate::Transition;
-use crate::next::SdTerm::{self, Next, Terminal};
-use crate::next::{Sdata, SdataMap};
+mod next;
 
-pub trait TerminatingSequence<D, T>: Transition<Next: Into<SdTerm<Self, D, T>>> {
+use crate::Transition;
+use crate::seq::endless::{Sdata, SdataMap};
+
+use self::next::SdTerm::{Next, Terminal};
+
+pub use self::next::SdTerm;
+
+pub trait SeqTerm<D, T>: Transition<Next: Into<SdTerm<Self, D, T>>> {
     fn into_next_sdterm(self) -> SdTerm<Self, D, T> {
         self.into_next().into()
     }
@@ -26,4 +31,4 @@ pub trait TerminatingSequence<D, T>: Transition<Next: Into<SdTerm<Self, D, T>>> 
     }
 }
 
-impl<B, D, T> TerminatingSequence<D, T> for B where B: Transition<Next: Into<SdTerm<B, D, T>>> {}
+impl<B, D, T> SeqTerm<D, T> for B where B: Transition<Next: Into<SdTerm<B, D, T>>> {}

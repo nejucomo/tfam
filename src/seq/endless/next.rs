@@ -1,8 +1,4 @@
-mod term;
-
 use derive_more::{Constructor, From, Into};
-
-pub use self::term::SdTerm;
 
 #[derive(Copy, Clone, Debug, From, Into, Constructor)]
 pub struct Sdata<S, D> {

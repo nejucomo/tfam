@@ -1,10 +1,9 @@
 //! `TerminatingSequence` integration tests
 
 use superstate::Transition;
-use superstate::seq::TerminatingSequence;
+use superstate::seq::endless::Sdata;
+use superstate::seq::term::SeqTerm;
 use test_case::test_case;
-
-use superstate::next::Sdata;
 
 // Test treating an `EndlessSequence` as a `TerminatingSequence`:
 #[derive(Copy, Clone)]
@@ -22,7 +21,7 @@ impl Transition for Naturals {
 #[test_case(Naturals(0) => 15)]
 fn sum_first_five<S>(termseq: S) -> usize
 where
-    S: TerminatingSequence<usize, ()>,
+    S: SeqTerm<usize, ()>,
 {
     let mut stepsleft = 5;
     let mut sum = 0;
