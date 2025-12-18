@@ -1,6 +1,6 @@
 use derive_more::{Constructor, From, Into};
 
-use crate::{MapData, MapState};
+use crate::maps::{MapData, MapState};
 
 #[derive(Copy, Clone, Debug, From, Into, Constructor)]
 pub struct StateData<S, D> {

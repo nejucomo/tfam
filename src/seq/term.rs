@@ -1,13 +1,10 @@
-mod next;
+use crate::Transition;
+use crate::maps::MapData as _;
+use crate::seq::StateData;
+use crate::seq::StateDataTerm::{self, Next, Terminal};
 
-use crate::{MapData, StateData, Transition};
-
-use self::next::SeqTermNext::{Next, Terminal};
-
-pub use self::next::SeqTermNext;
-
-pub trait SeqTerminal<D, T>: Transition<Next: Into<SeqTermNext<Self, D, T>>> {
-    fn into_next_sdterm(self) -> SeqTermNext<Self, D, T> {
+pub trait SeqTerminal<D, T>: Transition<Next: Into<StateDataTerm<Self, D, T>>> {
+    fn into_next_sdterm(self) -> StateDataTerm<Self, D, T> {
         self.into_next().into()
     }
 
@@ -30,4 +27,4 @@ pub trait SeqTerminal<D, T>: Transition<Next: Into<SeqTermNext<Self, D, T>>> {
     }
 }
 
-impl<B, D, T> SeqTerminal<D, T> for B where B: Transition<Next: Into<SeqTermNext<B, D, T>>> {}
+impl<B, D, T> SeqTerminal<D, T> for B where B: Transition<Next: Into<StateDataTerm<B, D, T>>> {}

@@ -1,8 +1,8 @@
 //! `TerminatingSequence` integration tests
 
 use test_case::test_case;
-use tfam::seq::SeqTerminal;
-use tfam::{StateData, Transition};
+use tfam::Transition;
+use tfam::seq::{SeqTerminal, StateData};
 
 // Test treating an `EndlessSequence` as a `TerminatingSequence`:
 #[derive(Copy, Clone)]
